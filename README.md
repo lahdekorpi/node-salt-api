@@ -2,15 +2,21 @@
 A simple Node.js package to send functions to Salt Stack salt-api via CherryPy.  
 Use Salt modules from Node.js.
 
+## Requirements
+
+You need to have salt-api and CherryPy installed and configured.  
+Please follow the [installation instructions of Salt netapi rest_cherrypy](https://docs.saltstack.com/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html).
+
 ## Install
 
 _TODO_
 
 ## Example
 
-```
+```js
 const Salt = require("salt-api");
 const salt = salt({
+	url: "http://localhost:8000",
 	username: "salt",
 	password: "secret"
 });
@@ -29,4 +35,4 @@ salt.ready.then(() => {
 });
 ```
 
-> LICENSE: MIT
+**LICENSE: MIT**
