@@ -1,6 +1,7 @@
 const request = require("request-promise-native");
 
 class Salt {
+
 	constructor(config) {
 		this.config = config;
 		this.headers = "";
@@ -15,7 +16,7 @@ class Salt {
 			form: {
 				username: this.config.username,
 				password: this.config.password,
-				eauth: (typeof this.config.eauth === "string")?this.config.eauth:"pam"
+				eauth: (typeof this.config.eauth === "string") ? this.config.eauth : "pam"
 			}
 		}).then(data => {
 			if(typeof data === "object" && typeof data.return === "object" && typeof data.return[0].token === "string") {
@@ -41,9 +42,10 @@ class Salt {
 	}
 
 	testToken() {
-		return new Promise( async resolve => {
+		return new Promise(async resolve => {
 			if(this.expire <= new Date() / 1000) {
-				await this.init();
+				this.init();
+				await this.ready;
 			}
 		});
 	}
