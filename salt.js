@@ -27,13 +27,16 @@ class Salt {
 		}).catch(e => console.error(e));
 	}
 
-	fun(tgt="*", fun="test.ping", client="local") {
+	fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local") {
+		let form = { tgt, fun, client }
+		if(arg) form.arg = arg;
+		if(kwarg) form.kwarg = kwarg;
 		return request({
 			url: this.config.url,
 			method: "POST",
 			json: true,
 			headers: {"X-Auth-Token": this.token},
-			form: { tgt, fun, client }
+			form
 		});
 	}
 
