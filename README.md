@@ -9,7 +9,41 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ## Install
 
-_TODO_
+`npm add salt-api`
+
+## Usage
+
+### First, require salt-api
+`const Salt = require("salt-api");`
+
+### Configure
+Configure the API via an object containing `url`, `username`, `password`.  
+If needed, you can also provide `eauth`. Defaults to "pam".
+
+`const salt = salt(YourConfigObjectHere);`
+
+### Wait for authentication
+Make sure salt-api is done with the authentication.
+
+`await salt.ready;`  
+
+or  
+
+```js
+salt.ready.then(() => {
+	// Code
+});
+```
+
+### Run functions
+
+`salt.fun(target, function, arguments, keyword arguments, client)`
+
+`target` defaults to "*"  
+`function` defaults to "test.ping"  
+`arg` defaults to false, not sent  
+`kwarg` defaults to false, not sent  
+`client` defaults to "local"  
 
 ## Example
 
