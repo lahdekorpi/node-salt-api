@@ -28,7 +28,11 @@ class Salt {
 		}).catch(e => console.error(e));
 	}
 
-	fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local") {
+	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local") {
+		if(this.expire <= new Date() / 1000) {
+			this.init();
+			await this.ready;
+		}
 		let form = { tgt, fun, client }
 		if(arg) form.arg = arg;
 		if(kwarg) form.kwarg = kwarg;
@@ -38,15 +42,6 @@ class Salt {
 			json: true,
 			headers: {"X-Auth-Token": this.token},
 			form
-		});
-	}
-
-	testToken() {
-		return new Promise(async resolve => {
-			if(this.expire <= new Date() / 1000) {
-				this.init();
-				await this.ready;
-			}
 		});
 	}
 
