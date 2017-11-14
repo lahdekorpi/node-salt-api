@@ -45,7 +45,7 @@ salt.ready.then(() => {
 `kwarg` defaults to false, not sent  
 `client` defaults to "local"  
 
-Returns an object containing a return array with the data directly from the API.
+Returns a Promise that resolves an object containing a return array with the data directly from the API.
 
 ## Example
 
