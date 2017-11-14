@@ -18,9 +18,9 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ### Configure
 Configure the API via an object containing `url`, `username`, `password`.  
-If needed, you can also provide `eauth`. Defaults to "pam".
+If needed, you can also provide `eauth`. Defaults to "pam".  
 
-`const salt = salt(YourConfigObjectHere);`
+`const salt = new Salt(YourConfigObjectHere);`
 
 ### Wait for authentication
 Make sure salt-api is done with the authentication.
@@ -44,6 +44,8 @@ salt.ready.then(() => {
 `arg` defaults to false, not sent  
 `kwarg` defaults to false, not sent  
 `client` defaults to "local"  
+
+Returns an object containing a return array with the data directly from the API.
 
 ## Example
 
