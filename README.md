@@ -1,4 +1,4 @@
-# node-salt-api
+# node-salt-api [![Known Vulnerabilities](https://snyk.io/test/github/lahdekorpi/node-salt-api/badge.svg)](https://snyk.io/test/github/lahdekorpi/node-salt-api)
 A simple Node.js package to send functions to Salt Stack salt-api via CherryPy.  
 Use Salt modules from Node.js.
 
