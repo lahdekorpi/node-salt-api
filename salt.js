@@ -28,7 +28,7 @@ class Salt {
 		}).catch(e => console.error(e));
 	}
 
-	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local") {
+	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false) {
 		if(this.expire <= new Date() / 1000) {
 			this.init();
 			await this.ready;
@@ -36,12 +36,12 @@ class Salt {
 		let form = { tgt, fun, client }
 		if(arg) form.arg = arg;
 		if(kwarg) form.kwarg = kwarg;
+		if(pillar) form.pillar = pillar;
 		return request({
 			url: this.config.url,
 			method: "POST",
-			json: true,
+			json: form,
 			headers: {"X-Auth-Token": this.token},
-			form
 		});
 	}
 
