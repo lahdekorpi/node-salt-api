@@ -43,7 +43,7 @@ salt.ready.then(() => {
 `function` defaults to "test.ping"  
 `arg` defaults to false, not sent  
 `kwarg` defaults to false, not sent  
-`client` defaults to "local"
+`client` defaults to "local"  
 `pillar` defaults to false, not sent  
 
 Returns a Promise that resolves an object containing a return array with the data directly from the API.
