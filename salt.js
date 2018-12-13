@@ -35,7 +35,7 @@ class Salt {
 		}
 		this.ready = request({
 			url: this.config.url + "/minions",
-			method: "POST",
+			method: "GET",
 			json: form,
 			headers: {"X-Auth-Token": this.token},
 		});
