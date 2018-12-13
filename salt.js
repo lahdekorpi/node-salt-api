@@ -27,6 +27,21 @@ class Salt {
 			}
 		}).catch(e => console.error(e));
 	}
+	
+	minions() {
+		if(this.expire <= new Date() / 1000) {
+			this.init();
+			await this.ready;
+		}
+		this.ready = request({
+			url: this.config.url + "/minions",
+			method: "POST",
+			json: form,
+			headers: {"X-Auth-Token": this.token},
+		});
+	}
+		
+	
 
 	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false, timeout=false) {
 		if(this.expire <= new Date() / 1000) {
