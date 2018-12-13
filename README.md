@@ -9,7 +9,7 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ## Install
 
-`npm add salt-api`
+`npm install salt-api`
 
 ## Usage
 
@@ -52,7 +52,7 @@ Returns a Promise that resolves an object containing a return array with the dat
 
 ```js
 const Salt = require("salt-api");
-const salt = salt({
+const salt = new Salt({
 	url: "http://localhost:8000",
 	username: "salt",
 	password: "secret"
