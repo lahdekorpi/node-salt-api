@@ -17,7 +17,7 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 `const Salt = require("salt-api");`
 
 ### Configure
-Configure the API via an object containing `url`, `username`, `password`.  
+Configure the API via an object containing `endpoint`,`url`, `username`, `password`, `method`.  
 If needed, you can also provide `eauth`. Defaults to "pam".  
 
 `const salt = new Salt(YourConfigObjectHere);`
@@ -53,9 +53,11 @@ Returns a Promise that resolves an object containing a return array with the dat
 ```js
 const Salt = require("salt-api");
 const salt = new Salt({
+        endpoint: "/login"
 	url: "http://localhost:8000",
 	username: "salt",
 	password: "secret"
+	method: "POST"
 });
 
 salt.ready.then(() => {
