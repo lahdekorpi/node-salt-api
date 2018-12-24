@@ -6,7 +6,6 @@ class Salt {
 		this.config = config;
 		this.headers = "";
 		this.init();
-		this.initRun();
 	}
 
 	init() {
