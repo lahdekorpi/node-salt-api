@@ -11,8 +11,9 @@ class Salt {
 
 	init() {
 		this.ready = request({
-			url: this.config.url + "/login",
-			method: "POST",
+			endpoint = this.config.endpoint
+			url: this.config.url + endpoint,
+			method: this.config.url,
 			json: true,
 			form: {
 				username: this.config.username,
@@ -27,44 +28,6 @@ class Salt {
 				throw "Got no token";
 			}
 		}).catch(e => console.error(e));
-	}
-	
-	initRun() {
-		this.ready = request({
-			url: this.config.url + "/run",
-			method: "POST",
-			json: true,
-			form: {
-				username: this.config.username,
-				password: this.config.password,
-				eauth: (typeof this.config.eauth === "string") ? this.config.eauth : "pam"
-			}
-		}).then(data => {
-			if(typeof data === "object" && typeof data.return === "object" && typeof data.return[0].token === "string") {
-				this.token = data.return[0].token;
-				this.expire = data.return[0].expire;
-			} else {
-				throw "Got no token";
-			}
-		}).catch(e => console.error(e));
-	}
-		
-	async funRun(tgt="*", fun="cmd.run", arg=false, kwarg="ls -lrt", client="local", pillar=false, timeout=false) {
-		if(this.expire <= new Date() / 1000) {
-			this.initRun();
-			await this.ready;
-		}
-		let form = { tgt, fun, client }
-		if(arg) form.arg = arg;
-		if(kwarg) form.kwarg = kwarg;
-		if(pillar) form.pillar = pillar;
-		if(timeout) form.timeout = timeout;
-		return request({
-			url: this.config.url,
-			method: "GET",
-			json: form,
-			headers: {"X-Auth-Token": this.token},
-		});
 	}
 	
 
@@ -80,7 +43,7 @@ class Salt {
 		if(timeout) form.timeout = timeout;
 		return request({
 			url: this.config.url,
-			method: "POST",
+			method: this.config.method,
 			json: form,
 			headers: {"X-Auth-Token": this.token},
 		});
