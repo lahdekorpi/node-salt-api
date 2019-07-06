@@ -4,7 +4,9 @@
   "description": "A simple salt-api client library",
   "main": "salt.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,8 @@
   "homepage": "https://github.com/lahdekorpi/node-salt-api#readme",
   "dependencies": {
     "request": "^2.83.0",
-    "request-promise-native": "^1.0.5"
-  }
+    "request-promise-native": "^1.0.5",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
