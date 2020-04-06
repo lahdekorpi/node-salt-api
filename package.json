@@ -1,6 +1,6 @@
 {
   "name": "salt-api",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A simple salt-api client library",
   "main": "salt.js",
   "scripts": {
@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/lahdekorpi/node-salt-api#readme",
   "dependencies": {
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
-    "snyk": "^1.259.0"
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8",
+    "snyk": "^1.305.0"
   },
   "snyk": true
 }
