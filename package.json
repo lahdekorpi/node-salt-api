@@ -26,8 +26,8 @@
   "homepage": "https://github.com/lahdekorpi/node-salt-api#readme",
   "dependencies": {
     "request": "^2.88.2",
-    "request-promise-native": "^1.0.8",
-    "snyk": "^1.305.0"
+    "request-promise-native": "^1.0.9",
+    "snyk": "^1.388.0"
   },
   "snyk": true
 }
