@@ -27,7 +27,7 @@
   "dependencies": {
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
-    "snyk": "^1.518.0"
+    "snyk": "^1.685.0"
   },
   "snyk": true
 }
