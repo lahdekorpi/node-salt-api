@@ -28,7 +28,7 @@ class Salt {
 		}).catch(e => console.error(e));
 	}
 
-	async fun(tgt="*", tgt_type = "glob", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false, timeout=false) {
+	async fun(tgt="*", tgt_type="glob", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false, timeout=false) {
 		if(this.expire <= new Date() / 1000) {
 			this.init();
 			await this.ready;
