@@ -1,5 +1,5 @@
 ## [1.2.0] (2022-08-30)
-- Add tgt option
+- Add tgt_type option
 - Updated dependencies
 
 ## [1.1.3] (2020-09-03)
