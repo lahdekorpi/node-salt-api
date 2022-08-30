@@ -28,7 +28,7 @@ class Salt {
 		}).catch(e => console.error(e));
 	}
 
-	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false, timeout=false) {
+	async fun(tgt="*", fun="test.ping", arg=false, kwarg=false, client="local", pillar=false, timeout=false, tgt_type=false) {
 		if(this.expire <= new Date() / 1000) {
 			this.init();
 			await this.ready;
@@ -38,6 +38,7 @@ class Salt {
 		if(kwarg) form.kwarg = kwarg;
 		if(pillar) form.pillar = pillar;
 		if(timeout) form.timeout = timeout;
+		if(tgt_type) form.tgt_type = tgt_type;
 		return request({
 			url: this.config.url,
 			method: "POST",

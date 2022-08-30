@@ -37,7 +37,7 @@ salt.ready.then(() => {
 
 ### Run functions
 
-`salt.fun(target, function, arguments, keyword arguments, client, pillar)`
+`salt.fun(target, function, arguments, keyword arguments, client, pillar, tgt_type)`
 
 `target` defaults to "*"  
 `function` defaults to "test.ping"  
@@ -45,6 +45,7 @@ salt.ready.then(() => {
 `kwarg` defaults to false, not sent  
 `client` defaults to "local"  
 `pillar` defaults to false, not sent  
+`tgt_type` defaults to false, not sent  
 
 Returns a Promise that resolves an object containing a return array with the data directly from the API.
 
