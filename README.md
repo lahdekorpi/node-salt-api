@@ -14,7 +14,7 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 ## Usage
 
 ### First, require salt-api
-`const Salt = require("salt-api");`
+`import { Salt } from "salt-api";`
 
 ### Configure
 Configure the API via an object containing `url`, `username`, `password`.  
@@ -25,12 +25,12 @@ If needed, you can also provide `eauth`. Defaults to "pam".
 ### Wait for authentication
 Make sure salt-api is done with the authentication.
 
-`await salt.ready;`  
+`await salt.login();`  
 
 or  
 
 ```js
-salt.ready.then(() => {
+salt.login().then(() => {
 	// Code
 });
 ```
@@ -49,17 +49,33 @@ salt.ready.then(() => {
 
 Returns a Promise that resolves an object containing a return array with the data directly from the API.
 
+### Get minions
+
+`salt.minions(mid)`
+
+`mid` optional minion id 
+
+Returns a Promise that resolves an object containing a minon information in a return array with the data directly from the API.
+
+### Get jobs
+
+`salt.jobs(jid)`
+
+`jid` optional job id
+
+Returns a Promise that resolves an object containing the job information in a return array with the data directly from the API.
+
 ## Example
 
 ```js
-const Salt = require("salt-api");
+import { Salt } from "salt-api";
 const salt = new Salt({
 	url: "http://localhost:8000",
 	username: "salt",
 	password: "secret"
 });
 
-salt.ready.then(() => {
+salt.login().then(() => {
 
 	// Same as running `salt "*" test.ping` in the command line
 	salt.fun("*", "test.ping").then(data => {
