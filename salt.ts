@@ -56,7 +56,7 @@ export class Salt {
     }
   }
 
-  async fun(tgt = "*", fun = "test.ping", arg = false, kwarg = false, client = "local", pillar = false, timeout = false, tgt_type = false): Promise<any> {
+  async fun(tgt = "*", fun = "test.ping", arg: string | string[] = "", kwarg: object | string | string[] = undefined, tgt_type = "", client = "local", pillar = "", timeout: number = undefined): Promise<any> {
     if (((this.expire <= new Date()) as any) / 1000) {
       // Token expired, logging in again
       await this.login();
@@ -64,9 +64,9 @@ export class Salt {
     const form: { [key: string]: any } = { tgt, fun, client };
     if (arg) form.arg = arg;
     if (kwarg) form.kwarg = kwarg;
+    if (tgt_type) form.tgt_type = tgt_type;
     if (pillar) form.pillar = pillar;
     if (timeout) form.timeout = timeout;
-    if (tgt_type) form.tgt_type = tgt_type;
     return this.axios
       .post(this.config.url, form, {
         headers: { ...this.headers, "X-Auth-Token": this.token },
