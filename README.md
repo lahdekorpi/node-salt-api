@@ -22,6 +22,21 @@ If needed, you can also provide `eauth`. Defaults to "pam".
 
 `const salt = new Salt(YourConfigObjectHere);`
 
+### Debug
+
+Add second param true for debug logs.  
+`const salt = new Salt(YourConfigObjectHere, true);`
+
+```js
+{
+  tgt: 'not master',
+  fun: 'saltutil.refresh_pillar',
+  client: 'local',
+  tgt_type: 'compound',
+  duration: 1.934
+}
+```
+
 ### Wait for authentication
 Make sure salt-api is done with the authentication.
 
