@@ -52,15 +52,17 @@ salt.login().then(() => {
 
 ### Run functions
 
-`salt.fun(target, function, arguments, keyword arguments, client, pillar, tgt_type)`
-
+`salt.fun(target, function, funOptionsObjectHere)`  
 `target` defaults to "*"  
 `function` defaults to "test.ping"  
-`arg` defaults to false, not sent  
-`kwarg` defaults to false, not sent  
 `client` defaults to "local"  
-`pillar` defaults to false, not sent  
-`tgt_type` defaults to false, not sent  
+
+Example of funOptions object  
+`salt.fun("not master", "saltutil.refresh_pillar", { tgt_type: "compound" });`
+
+See more from Salt docs
+- [https://docs.saltproject.io/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html](https://docs.saltproject.io/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html)
+- [https://docs.saltproject.io/en/latest/ref/clients/index.html#salt.client.LocalClient.cmd](https://docs.saltproject.io/en/latest/ref/clients/index.html#salt.client.LocalClient.cmd)
 
 Returns a Promise that resolves an object containing a return array with the data directly from the API.
 

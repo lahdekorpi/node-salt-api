@@ -9,6 +9,16 @@ interface SaltConfig {
   eauth?: string;
 }
 
+interface FunOptions {
+  client?: "local" | "runner" | "wheel";
+  arg?: string | string[];
+  kwarg?: any;
+  tgt_type?: "glob" | "pcre" | "list" | "grain" | "grain_pcre" | "pillar" | "pillar_pcre" | "nodegroup" | "range" | "compound" | "ipcidr";
+  pillar?: string;
+  timeout?: number;
+  full_return?: boolean;
+}
+
 export class Salt {
   config: SaltConfig = {
     url: "http://localhost:8000",
@@ -95,20 +105,20 @@ export class Salt {
     }
   }
 
-  async fun(tgt = "*", fun = "test.ping", arg: string | string[] = "", kwarg: object | string | string[] = undefined, tgt_type = "", client = "local", pillar = "", timeout: number = undefined): Promise<any> {
+  async fun(tgt = "*", fun: string | string[] = "test.ping", funOptions: FunOptions = undefined): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
       // Debug log
       if (this.debug) console.log("[NODE-SALT-API] Token expired, logging in again");
       // Token expired, logging in again
       await this.login();
     }
-    const form: { [key: string]: any } = { tgt, fun, client };
-    if (arg) form.arg = arg;
-    if (kwarg) form.kwarg = kwarg;
-    if (tgt_type) form.tgt_type = tgt_type;
-    if (pillar) form.pillar = pillar;
-    if (timeout) form.timeout = timeout;
-
+    const form: { [key: string]: any } = { tgt, fun, client: "local" };
+    if (funOptions?.client) form.arg = funOptions.client;
+    if (funOptions?.arg) form.arg = funOptions.arg;
+    if (funOptions?.kwarg) form.kwarg = funOptions.kwarg;
+    if (funOptions?.tgt_type) form.tgt_type = funOptions.tgt_type;
+    if (funOptions?.pillar) form.pillar = funOptions.pillar;
+    if (funOptions?.timeout) form.timeout = funOptions.timeout;
     return this.axios
       .post(this.config.url, form, {
         headers: { ...this.headers, "X-Auth-Token": this.token },
