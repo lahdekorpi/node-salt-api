@@ -57,7 +57,7 @@ export class Salt {
   }
 
   async fun(tgt = "*", fun = "test.ping", arg: string | string[] = "", kwarg: object | string | string[] = undefined, tgt_type = "", client = "local", pillar = "", timeout: number = undefined): Promise<any> {
-    if (((this.expire <= new Date()) as any) / 1000) {
+    if ((this.expire <= Date.now() / 1000) as any) {
       // Token expired, logging in again
       await this.login();
     }
@@ -75,7 +75,7 @@ export class Salt {
   }
 
   async minions(mid = ""): Promise<any> {
-    if (((this.expire <= new Date()) as any) / 1000) {
+    if ((this.expire <= Date.now() / 1000) as any) {
       // Token expired, logging in again
       await this.login();
     }
@@ -87,7 +87,7 @@ export class Salt {
   }
 
   async jobs(jid = ""): Promise<any> {
-    if (((this.expire <= new Date()) as any) / 1000) {
+    if ((this.expire <= Date.now() / 1000) as any) {
       // Token expired, logging in again
       await this.login();
     }
