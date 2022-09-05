@@ -169,7 +169,7 @@ export class Salt {
 
   /**
    * Debug log, if debug is enabled logs requests with duration to console
-   * @param debugObject containing error to log
+   * @param debugObject
    * @param response object
    * @param error object
    */
