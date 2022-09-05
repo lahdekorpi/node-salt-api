@@ -46,7 +46,6 @@ export class Salt {
         });
     }
 
-    // Debug
     if (this.debug) {
       // Set request startTime
       this.axios.interceptors.request.use(
@@ -89,12 +88,7 @@ export class Salt {
       },
     });
 
-    // Debug log
-    if (this.debug) {
-      const req: any = response;
-      const debug = { path: "/login", duration: req.duration / 1000 };
-      console.log(`[NODE-SALT-API] ${JSON.stringify(debug)}`);
-    }
+    this.debugLog({ url: this.config.url, path: "/login" }, response);
 
     const data = response.data;
     if (typeof data === "object" && typeof data.return === "object" && typeof data.return[0].token === "string") {
@@ -108,7 +102,7 @@ export class Salt {
   async fun(tgt = "*", fun: string | string[] = "test.ping", funOptions: FunOptions = undefined): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
       // Debug log
-      if (this.debug) console.log("[NODE-SALT-API] Token expired, logging in again");
+      this.debugLog({ function: "fun", log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
     }
@@ -124,31 +118,18 @@ export class Salt {
         headers: { ...this.headers, "X-Auth-Token": this.token },
       })
       .then((response) => {
-        // Debug log
-        if (this.debug) {
-          const req: any = response;
-          form.duration = req.duration / 1000;
-          console.log("[NODE-SALT-API] fun():");
-          console.log(form);
-        }
+        this.debugLog(form, response);
         return response.data;
       })
       .catch((err) => {
-        if (this.debug) {
-          const req: any = err;
-          form.duration = req.duration / 1000;
-          console.log("[NODE-SALT-API] fun():");
-          console.log(form);
-          console.log(`[NODE-SALT-API] ${err.message}`);
-        }
+        this.debugLog(form, undefined, err);
         throw err;
       });
   }
 
   async minions(mid = ""): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
-      // Debug log
-      if (this.debug) console.log("[NODE-SALT-API] Token expired, logging in again");
+      this.debugLog({ path: "/minions", mid, log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
     }
@@ -157,29 +138,18 @@ export class Salt {
         headers: { ...this.headers, "X-Auth-Token": this.token },
       })
       .then((response) => {
-        // Debug log
-        if (this.debug) {
-          const req: any = response;
-          const debug = { path: "/minions", mid, duration: req.duration / 1000 };
-          console.log(`[NODE-SALT-API] ${JSON.stringify(debug)}`);
-        }
+        this.debugLog({ path: "/minions", mid }, response);
         return response.data;
       })
       .catch((err) => {
-        if (this.debug) {
-          const req: any = err;
-          const debug = { path: "/minions", mid, duration: req.duration / 1000 };
-          console.log(`[NODE-SALT-API] ${JSON.stringify(debug)}`);
-          console.log(`[NODE-SALT-API] ${err.message}`);
-        }
+        this.debugLog({ path: "/minions", mid }, undefined, err);
         throw err;
       });
   }
 
   async jobs(jid = ""): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
-      // Debug log
-      if (this.debug) console.log("[NODE-SALT-API] Token expired, logging in again");
+      this.debugLog({ path: "/jobs", jid, log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
     }
@@ -188,24 +158,30 @@ export class Salt {
         headers: { ...this.headers, "X-Auth-Token": this.token },
       })
       .then((response) => {
-        // Debug log
-        if (this.debug) {
-          const req: any = response;
-          const debug = { path: "/jobs", jid, duration: req.duration / 1000 };
-          console.log(`[NODE-SALT-API] ${JSON.stringify(debug)}`);
-        }
-
+        this.debugLog({ path: "/jobs", jid }, response);
         return response.data;
       })
       .catch((err) => {
-        // Debug log
-        if (this.debug) {
-          const req: any = err;
-          const debug = { path: "/jobs", jid, duration: req.duration / 1000 };
-          console.log(`[NODE-SALT-API] ${JSON.stringify(debug)}`);
-          console.log(`[NODE-SALT-API] ${err.message}`);
-        }
+        this.debugLog({ path: "/jobs", jid }, undefined, err);
         throw err;
       });
+  }
+
+  /**
+   * Debug log, if debug is enabled logs requests with duration to console
+   * @param debugObject containing error to log
+   * @param response object
+   * @param error object
+   */
+  private debugLog(debugObject: any, response: any = undefined, error: any = undefined): void {
+    if (!this.debug) return;
+
+    if (response) debugObject.duration = response.duration / 1000;
+    if (error) {
+      debugObject.duration = error.duration / 1000;
+      console.log(`[NODE-SALT-API] ${error.message}`);
+    }
+    console.log("[NODE-SALT-API]");
+    console.log(debugObject);
   }
 }
