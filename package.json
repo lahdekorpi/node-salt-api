@@ -1,6 +1,6 @@
 {
   "name": "salt-api",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "A simple salt-api client library",
   "main": "dist/salt.js",
   "types": "dist/salt.d.ts",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepublish": "npm run snyk-protect"
   },
   "repository": {
@@ -29,11 +29,12 @@
     "url": "https://github.com/lahdekorpi/node-salt-api/issues"
   },
   "homepage": "https://github.com/lahdekorpi/node-salt-api#readme",
-  "dependencies": {
+  "peerDependencies": {
     "axios": "^0.27.2"
   },
   "snyk": true,
   "devDependencies": {
+    "@snyk/protect": "^1.998.0",
     "@types/node": "^18.7.14",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
@@ -41,7 +42,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
-    "snyk": "^1.801.0",
     "typescript": "^4.8.2"
   }
 }
