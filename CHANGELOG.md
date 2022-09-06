@@ -1,3 +1,10 @@
+## [2.0.3] (2022-09-06)
+- Switch Axios to a peer dependency
+- Update Snyk to @snyk/protect
+
+## [2.0.2] (2022-09-05)
+- Finalizing the next branch as stable
+
 ## [1.2.0] (2022-08-30)
 - Add tgt_type option
 - Updated dependencies

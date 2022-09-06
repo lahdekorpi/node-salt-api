@@ -9,7 +9,9 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ## Install
 
-`npm add salt-api`
+`npm add salt-api axios`
+
+Please note that axios is a peerDependency so depending on your use case, you may need to install it manually.
 
 ## Usage
 
@@ -20,7 +22,7 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 Configure the API via an object containing `url`, `username`, `password`.  
 If needed, you can also provide `eauth`. Defaults to "pam".  
 
-`const salt = new Salt(YourConfigObjectHere);`
+`const salt = new Salt(YourConfigObjectHere, debug = false, axiosInstance = undefined);`
 
 ### Debug
 
