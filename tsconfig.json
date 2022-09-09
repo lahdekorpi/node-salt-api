@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "./dist",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "lib": ["es2017", "es7", "es6"],
+        "outDir": "./dist",
+        "target": "es2017",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "emitDecoratorMetadata": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "baseUrl": "./",
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "strictBindCallApply": false,
+        "forceConsistentCasingInFileNames": false,
+        "noFallthroughCasesInSwitch": false
+    },
+    "typedocOptions": {
+        "mode": "modules",
+        "out": "docs"
+    },
+    "include": [
+        "salt.ts"
+    ],
+    "exclude": [
+        "node_modules", "dist"
+    ]
+  }
+  

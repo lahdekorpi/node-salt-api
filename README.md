@@ -9,57 +9,92 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ## Install
 
-`npm add salt-api`
+`npm add salt-api axios`
+
+Please note that axios is a peerDependency so depending on your use case, you may need to install it manually.
 
 ## Usage
 
 ### First, require salt-api
-`const Salt = require("salt-api");`
+`import { Salt } from "salt-api";`
 
 ### Configure
 Configure the API via an object containing `url`, `username`, `password`.  
 If needed, you can also provide `eauth`. Defaults to "pam".  
 
-`const salt = new Salt(YourConfigObjectHere);`
+`const salt = new Salt(YourConfigObjectHere, debug = false, axiosInstance = undefined);`
+
+### Debug
+
+Add second param true for debug logs.  
+`const salt = new Salt(YourConfigObjectHere, true);`
+
+```js
+{
+  tgt: 'not master',
+  fun: 'saltutil.refresh_pillar',
+  client: 'local',
+  tgt_type: 'compound',
+  duration: 1.934
+}
+```
 
 ### Wait for authentication
 Make sure salt-api is done with the authentication.
 
-`await salt.ready;`  
+`await salt.login();`  
 
 or  
 
 ```js
-salt.ready.then(() => {
+salt.login().then(() => {
 	// Code
 });
 ```
 
 ### Run functions
 
-`salt.fun(target, function, arguments, keyword arguments, client, pillar, tgt_type)`
-
+`salt.fun(target, function, funOptionsObjectHere)`  
 `target` defaults to "*"  
 `function` defaults to "test.ping"  
-`arg` defaults to false, not sent  
-`kwarg` defaults to false, not sent  
 `client` defaults to "local"  
-`pillar` defaults to false, not sent  
-`tgt_type` defaults to false, not sent  
+
+Example of funOptions object  
+`salt.fun("not master", "saltutil.refresh_pillar", { tgt_type: "compound" });`
+
+See more from Salt docs
+- [https://docs.saltproject.io/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html](https://docs.saltproject.io/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html)
+- [https://docs.saltproject.io/en/latest/ref/clients/index.html#salt.client.LocalClient.cmd](https://docs.saltproject.io/en/latest/ref/clients/index.html#salt.client.LocalClient.cmd)
 
 Returns a Promise that resolves an object containing a return array with the data directly from the API.
+
+### Get minions
+
+`salt.minions(mid)`
+
+`mid` optional minion id 
+
+Returns a Promise that resolves an object containing a minon information in a return array with the data directly from the API.
+
+### Get jobs
+
+`salt.jobs(jid)`
+
+`jid` optional job id
+
+Returns a Promise that resolves an object containing the job information in a return array with the data directly from the API.
 
 ## Example
 
 ```js
-const Salt = require("salt-api");
+import { Salt } from "salt-api";
 const salt = new Salt({
 	url: "http://localhost:8000",
 	username: "salt",
 	password: "secret"
 });
 
-salt.ready.then(() => {
+salt.login().then(() => {
 
 	// Same as running `salt "*" test.ping` in the command line
 	salt.fun("*", "test.ping").then(data => {
