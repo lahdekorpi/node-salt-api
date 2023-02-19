@@ -1,5 +1,6 @@
 import axios, { Axios, AxiosRequestHeaders } from "axios";
 import { URLSearchParams } from "url";
+import EventSource from "eventsource";
 
 interface SaltConfig {
   url: string;
@@ -74,6 +75,9 @@ export class Salt {
     }
   }
 
+  /**
+   * Log in to receive a session token
+   */
   async login(): Promise<void> {
     const form: { [key: string]: any } = {
       eauth: typeof this.config.eauth === "string" ? this.config.eauth : "pam",
@@ -88,9 +92,9 @@ export class Salt {
       },
     });
 
-    this.debugLog({ url: this.config.url, path: "/login" }, response);
-
     const data = response.data;
+    this.debugLog({ url: this.config.url, path: "/login", perms: data.return[0].perms }, response);
+
     if (typeof data === "object" && typeof data.return === "object" && typeof data.return[0].token === "string") {
       this.token = data.return[0].token;
       this.expire = data.return[0].expire;
@@ -99,6 +103,26 @@ export class Salt {
     }
   }
 
+  /**
+   * Opens An HTTP stream of the Salt master event bus
+   * @returns EventSource
+   */
+  async eventSource(): Promise<EventSource> {
+    if ((this.expire <= Date.now() / 1000) as any) {
+      this.debugLog({ path: "/events", log: "Token expired, logging in again" });
+      // Token expired, logging in again
+      await this.login();
+    }
+    return new EventSource(`${this.config.url}/events`, { headers: { ...this.headers, "X-Auth-Token": this.token } });
+  }
+
+  /**
+   * Send one or more Salt commands in the request body
+   * @param tgt
+   * @param fun
+   * @param funOptions
+   * @returns
+   */
   async fun(tgt = "*", fun: string | string[] = "test.ping", funOptions: FunOptions = undefined): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
       // Debug log
@@ -127,6 +151,11 @@ export class Salt {
       });
   }
 
+  /**
+   * List minions or get minion details
+   * @param mid
+   * @returns
+   */
   async minions(mid = ""): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
       this.debugLog({ path: "/minions", mid, log: "Token expired, logging in again" });
@@ -147,6 +176,11 @@ export class Salt {
       });
   }
 
+  /**
+   * List jobs or show a single job from the job cache.
+   * @param jid
+   * @returns
+   */
   async jobs(jid = ""): Promise<any> {
     if ((this.expire <= Date.now() / 1000) as any) {
       this.debugLog({ path: "/jobs", jid, log: "Token expired, logging in again" });
