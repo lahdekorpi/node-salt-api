@@ -9,9 +9,9 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 ## Install
 
-`npm add salt-api axios`
+`npm add salt-api axios eventsource`
 
-Please note that axios is a peerDependency so depending on your use case, you may need to install it manually.
+Please note that axios and eventsource are peerDependencies so depending on your use case, you may need to install these manually.
 
 ## Usage
 
@@ -83,6 +83,31 @@ Returns a Promise that resolves an object containing a minon information in a re
 `jid` optional job id
 
 Returns a Promise that resolves an object containing the job information in a return array with the data directly from the API.
+
+### Events
+
+`salt.eventSource()`
+
+Opens connection to An HTTP stream of the Salt Master Event Bus and returns EventSource.
+
+```js
+
+const events = await salt.eventSource()
+events.onopen = () => {
+	console.log("Connected to Salt Master Event Bus")
+}
+
+events.onmessage = async (data) => {
+	console.log("Got event from Salt Master Events Bus", data)
+	// Do something with the data
+}
+
+events.onerror = async (err) => {
+	if (err?.status === 401 || err?.status === 403) {
+		console.log("Not authorized")
+	};
+}
+```
 
 ## Example
 
