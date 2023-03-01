@@ -1,3 +1,6 @@
+## [2.1.0] (2022-03-01)
+- Added support for connecting to the event bus
+
 ## [2.0.3] (2022-09-06)
 - Switch Axios to a peer dependency
 - Update Snyk to @snyk/protect

@@ -1,6 +1,6 @@
 {
   "name": "salt-api",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "A simple salt-api client library",
   "main": "dist/salt.js",
   "types": "dist/salt.d.ts",
