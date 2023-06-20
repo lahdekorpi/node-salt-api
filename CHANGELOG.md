@@ -1,3 +1,6 @@
+## [2.1.1] (2023-06-20)
+- Updated dependenciess
+
 ## [2.1.0] (2022-03-01)
 - Added support for connecting to the event bus
 
