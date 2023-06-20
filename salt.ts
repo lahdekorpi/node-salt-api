@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosRequestHeaders } from "axios";
+import axios, { Axios, RawAxiosRequestHeaders } from "axios";
 import { URLSearchParams } from "url";
 import EventSource from "eventsource";
 
@@ -25,7 +25,7 @@ export class Salt {
     url: "http://localhost:8000",
     eauth: "pam",
   };
-  headers: AxiosRequestHeaders = {
+  headers: RawAxiosRequestHeaders = {
     Accept: "application/json",
   };
   axios: Axios;
