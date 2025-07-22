@@ -1,3 +1,6 @@
+## [2.1.3] (2025-07-22)
+- Update dependencies
+
 ## [2.1.2] (2023-07-19)
 - Updated dependencies
 
