@@ -145,12 +145,12 @@ export class Salt {
    * @returns A promise resolving to an `EventSource` instance.
    */
   async eventSource(): Promise<EventSource> {
-    if (!this.expire || (this.expire <= Date.now() / 1000) as any) {
+    if (!this.expire || ((this.expire <= Date.now() / 1000) as any)) {
       this.debugLog({ path: "/events", log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
     }
-    return new EventSource(`${this.config.url}/events`, { headers: { ...this.headers as any, "X-Auth-Token": this.token } });
+    return new EventSource(`${this.config.url}/events`, { headers: { ...(this.headers as any), "X-Auth-Token": this.token } });
   }
 
   /**
@@ -162,7 +162,7 @@ export class Salt {
    * @returns A promise resolving to the data returned from the Salt API.
    */
   async fun(tgt = "*", fun: string | string[] = "test.ping", funOptions: FunOptions = undefined): Promise<any> {
-    if (!this.expire || (this.expire <= Date.now() / 1000) as any) {
+    if (!this.expire || ((this.expire <= Date.now() / 1000) as any)) {
       // Debug log
       this.debugLog({ function: "fun", log: "Token expired, logging in again" });
       // Token expired, logging in again
@@ -196,7 +196,7 @@ export class Salt {
    * @returns A promise resolving to the minion data returned from the Salt API.
    */
   async minions(mid = ""): Promise<any> {
-    if (!this.expire || (this.expire <= Date.now() / 1000) as any) {
+    if (!this.expire || ((this.expire <= Date.now() / 1000) as any)) {
       this.debugLog({ path: "/minions", mid, log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
@@ -222,7 +222,7 @@ export class Salt {
    * @returns A promise resolving to the job data returned from the Salt API.
    */
   async jobs(jid = ""): Promise<any> {
-    if (!this.expire || (this.expire <= Date.now() / 1000) as any) {
+    if (!this.expire || ((this.expire <= Date.now() / 1000) as any)) {
       this.debugLog({ path: "/jobs", jid, log: "Token expired, logging in again" });
       // Token expired, logging in again
       await this.login();
