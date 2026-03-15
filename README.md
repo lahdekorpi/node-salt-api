@@ -11,7 +11,7 @@ Please follow the [installation instructions of Salt netapi rest_cherrypy](https
 
 `npm add salt-api axios eventsource`
 
-Please note that axios and eventsource are peerDependencies so depending on your use case, you may need to install these manually.
+> **Note on `peerDependencies`:** `axios` and `eventsource` are defined as peer dependencies in this package. This allows you to bring your own versions of these dependencies so that they are not unnecessarily duplicated in your node_modules, reducing bundle sizes and potential conflicts. Depending on your package manager and its configuration, you may need to install them manually as shown above.
 
 ## Usage
 
@@ -19,14 +19,39 @@ Please note that axios and eventsource are peerDependencies so depending on your
 `import { Salt } from "salt-api";`
 
 ### Configure
-Configure the API via an object containing `url`, `username`, `password`.  
-If needed, you can also provide `eauth`. Defaults to "pam".  
 
-`const salt = new Salt(YourConfigObjectHere, debug = false, axiosInstance = undefined);`
+Configure the API via an object containing at least `url`. Typically, you will also provide `username`, and `password` or a pre-existing `token`.
+If needed, you can also provide `eauth`. Defaults to `"pam"`.
+
+```js
+const config = {
+  url: "http://localhost:8000",
+  username: "myuser",
+  password: "mypassword",
+  eauth: "pam"
+};
+
+const salt = new Salt(config, false, undefined);
+```
+
+#### Custom Axios Instance
+
+You can provide an optional third parameter to the constructor to use a custom Axios instance. This is highly useful if you need to provide an internal certificate, an HTTPS agent, or a proxy.
+
+```js
+import https from "https";
+import axios from "axios";
+
+const axiosInstance = axios.create({
+  httpsAgent: new https.Agent({ rejectUnauthorized: false })
+});
+
+const salt = new Salt(config, false, axiosInstance);
+```
 
 ### Debug
 
-Add second param true for debug logs.  
+Add the second parameter as `true` to enable debug logs. These logs provide you with insights on request times and parameters directly in your console.
 `const salt = new Salt(YourConfigObjectHere, true);`
 
 ```js
