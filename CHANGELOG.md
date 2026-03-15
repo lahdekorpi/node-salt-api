@@ -1,3 +1,8 @@
+## [2.1.4] (2026-03-15)
+- Updated dependencies
+- Improved code documentation and README
+- Fixed several bugs in method parameters and token expiration
+
 ## [2.1.3] (2025-07-22)
 - Update dependencies
 
