@@ -5,7 +5,7 @@ Use Salt modules from Node.js.
 ## Requirements
 
 You need to have salt-api and CherryPy installed and configured.  
-Please follow the [installation instructions of Salt netapi rest_cherrypy](https://docs.saltstack.com/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html).
+Please follow the [installation instructions of Salt netapi rest_cherrypy](https://docs.saltproject.io/en/latest/ref/netapi/all/salt.netapi.rest_cherrypy.html).
 
 ## Install
 
